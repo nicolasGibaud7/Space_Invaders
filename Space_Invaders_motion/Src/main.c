@@ -44,7 +44,7 @@
 #include "gpio.h"
 
 /* USER CODE BEGIN Includes */
-
+#include "../MDK-ARM/affichage.h"
 /* USER CODE END Includes */
 
 /* Private variables ---------------------------------------------------------*/
@@ -83,7 +83,7 @@ int main(void)
   HAL_Init();
 
   /* USER CODE BEGIN Init */
-
+	__HAL_RCC_SPI1_CLK_ENABLE();
   /* USER CODE END Init */
 
   /* Configure the system clock */
@@ -98,14 +98,16 @@ int main(void)
   MX_SPI1_Init();
   MX_USART2_UART_Init();
   /* USER CODE BEGIN 2 */
-
+	HAL_UART_Transmit(&huart2, (uint8_t*) "TEST !!!", 8, 1);
+	HAL_Delay(2000);
+	clear_screen(&huart2);
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-
+	
   /* USER CODE END WHILE */
 
   /* USER CODE BEGIN 3 */
