@@ -101,6 +101,8 @@ int main(void)
 	HAL_UART_Transmit(&huart2, (uint8_t*) "TEST !!!", 8, 1);
 	HAL_Delay(2000);
 	clear_screen(&huart2);
+	HAL_Delay(1000);
+	positioning_cursor(&huart2, 1, 1);
   /* USER CODE END 2 */
 
   /* Infinite loop */
