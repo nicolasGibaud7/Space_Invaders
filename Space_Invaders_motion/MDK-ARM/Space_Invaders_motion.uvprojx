@@ -311,7 +311,7 @@
           </ArmAdsMisc>
           <Cads>
             <interw>1</interw>
-            <Optim>4</Optim>
+            <Optim>1</Optim>
             <oTime>0</oTime>
             <SplitLS>0</SplitLS>
             <OneElfS>1</OneElfS>
@@ -337,7 +337,7 @@
               <MiscControls></MiscControls>
               <Define>USE_HAL_DRIVER,STM32F407xx</Define>
               <Undefine></Undefine>
-              <IncludePath>../Inc;C:/Users/nicol/STM32Cube/Repository/STM32Cube_FW_F4_V1.21.0/Drivers/STM32F4xx_HAL_Driver/Inc;C:/Users/nicol/STM32Cube/Repository/STM32Cube_FW_F4_V1.21.0/Drivers/STM32F4xx_HAL_Driver/Inc/Legacy;C:/Users/nicol/STM32Cube/Repository/STM32Cube_FW_F4_V1.21.0/Drivers/CMSIS/Device/ST/STM32F4xx/Include;C:/Users/nicol/STM32Cube/Repository/STM32Cube_FW_F4_V1.21.0/Drivers/CMSIS/Include</IncludePath>
+              <IncludePath>../Inc; C:/Users/nicol/STM32Cube/Repository/STM32Cube_FW_F4_V1.21.0/Drivers/STM32F4xx_HAL_Driver/Inc; C:/Users/nicol/STM32Cube/Repository/STM32Cube_FW_F4_V1.21.0/Drivers/STM32F4xx_HAL_Driver/Inc/Legacy; C:/Users/nicol/STM32Cube/Repository/STM32Cube_FW_F4_V1.21.0/Drivers/CMSIS/Device/ST/STM32F4xx/Include; C:/Users/nicol/STM32Cube/Repository/STM32Cube_FW_F4_V1.21.0/Drivers/CMSIS/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>

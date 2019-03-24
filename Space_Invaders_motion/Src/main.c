@@ -45,13 +45,14 @@
 
 /* USER CODE BEGIN Includes */
 #include "../MDK-ARM/affichage.h"
+#include "../MDK-ARM/game.h"
 /* USER CODE END Includes */
 
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
 /* Private variables ---------------------------------------------------------*/
-
+#define NB_MONSTER 3
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -98,11 +99,27 @@ int main(void)
   MX_SPI1_Init();
   MX_USART2_UART_Init();
   /* USER CODE BEGIN 2 */
-	HAL_UART_Transmit(&huart2, (uint8_t*) "TEST !!!", 8, 1);
-	HAL_Delay(2000);
 	clear_screen(&huart2);
+
+	Monster tab_monster[3];
+	tab_monster[0] = initialisation_monster(4, 2, 1, 'o');
+	tab_monster[1] = initialisation_monster(2, 4, 1, 'o');
+	tab_monster[2] = initialisation_monster(2, 2, 1, 'o');
+	//display_monsters(&huart2, tab_monster, 2);
+	
+	
+	
+	/* affichage des monstres */
+		for(uint8_t index = 0 ; index < NB_MONSTER ; index++){			
+			if(tab_monster[index]._state == 1){
+				positioning_cursor(&huart2, tab_monster[index]._position._x, tab_monster[index]._position._y);
+				HAL_UART_Transmit(&huart2, (uint8_t*) tab_monster[index]._type, 1, 1);
+			}
+		}
+	
 	HAL_Delay(1000);
-	positioning_cursor(&huart2, 1, 1);
+	
+	clear_screen(&huart2);
   /* USER CODE END 2 */
 
   /* Infinite loop */
