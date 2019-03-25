@@ -14,5 +14,10 @@ typedef struct {
 	_Bool _state;
 }Monster;
 
+typedef struct {
+	Position _position;
+	uint8_t life;
+}Shooter;
+
 Monster initialisation_monster(uint8_t x, uint8_t y, uint8_t life, uint8_t type);
 void display_monsters(UART_HandleTypeDef *huart, Monster *monsters, uint8_t nb_monster);

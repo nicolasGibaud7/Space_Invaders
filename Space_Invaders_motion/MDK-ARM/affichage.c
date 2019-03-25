@@ -12,8 +12,8 @@ void clear_screen(UART_HandleTypeDef *huart)
 
 void positioning_cursor(UART_HandleTypeDef *huart, uint8_t x, uint8_t y)
 {
-	char buffer[11];
-	sprintf(buffer, "\033[%d;%dH", x, y);
+	char buffer[13];
+	sprintf(buffer, "\033[%d;%dH", y, x);
 	HAL_UART_Transmit(huart, (uint8_t*) buffer, sizeof(buffer), 1);
 }
 

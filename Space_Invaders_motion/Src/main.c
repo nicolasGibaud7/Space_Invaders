@@ -100,15 +100,27 @@ int main(void)
   MX_USART2_UART_Init();
   /* USER CODE BEGIN 2 */
 	
+	/* Config Interruption */
 	HAL_NVIC_SetPriority(EXTI0_IRQn, 5, 5);
 	HAL_NVIC_EnableIRQ(EXTI0_IRQn);	
+	
 	clear_screen(&huart2);
-
+	
+	/* Création de monstres */
 	Monster tab_monster[3];
 	tab_monster[0] = initialisation_monster(4, 2, 1, 'o');
 	tab_monster[1] = initialisation_monster(2, 4, 1, 'o');
 	tab_monster[2] = initialisation_monster(2, 2, 1, 'o');
-	//display_monsters(&huart2, tab_monster, 2);
+	
+	/* Création shooter */
+	Shooter a_shooter;
+	a_shooter.life = 3;
+	a_shooter._position._x = 85;
+	a_shooter._position._y = 100;
+	
+	/* Et on l'affiche */
+	positioning_cursor(&huart2, a_shooter._position._x, a_shooter._position._y);
+	HAL_UART_Transmit(&huart2,  (uint8_t*)'_', 1, 1);
 	
 	/* affichage des monstres */
 	for(uint8_t index = 0 ; index < NB_MONSTER ; index++){			
@@ -120,14 +132,14 @@ int main(void)
 		
 	HAL_Delay(1000);
 	
-	clear_screen(&huart2);
+	//clear_screen(&huart2);
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-	
+		
   /* USER CODE END WHILE */
 
   /* USER CODE BEGIN 3 */
