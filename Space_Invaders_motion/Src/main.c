@@ -107,16 +107,14 @@ int main(void)
 	tab_monster[2] = initialisation_monster(2, 2, 1, 'o');
 	//display_monsters(&huart2, tab_monster, 2);
 	
-	
-	
 	/* affichage des monstres */
-		for(uint8_t index = 0 ; index < NB_MONSTER ; index++){			
-			if(tab_monster[index]._state == 1){
-				positioning_cursor(&huart2, tab_monster[index]._position._x, tab_monster[index]._position._y);
-				HAL_UART_Transmit(&huart2, (uint8_t*) tab_monster[index]._type, 1, 1);
-			}
+	for(uint8_t index = 0 ; index < NB_MONSTER ; index++){			
+		if(tab_monster[index]._state == 1){
+			positioning_cursor(&huart2, tab_monster[index]._position._x, tab_monster[index]._position._y);
+			HAL_UART_Transmit(&huart2, (uint8_t*) tab_monster[index]._type, 1, 1);
 		}
-	
+	}
+		
 	HAL_Delay(1000);
 	
 	clear_screen(&huart2);
@@ -190,6 +188,9 @@ void SystemClock_Config(void)
 }
 
 /* USER CODE BEGIN 4 */
+void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin){
+	HAL_UART_Transmit(&huart2, (uint8_t*)"T", 1, 1);
+}
 
 /* USER CODE END 4 */
 
