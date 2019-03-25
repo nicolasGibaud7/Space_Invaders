@@ -99,6 +99,9 @@ int main(void)
   MX_SPI1_Init();
   MX_USART2_UART_Init();
   /* USER CODE BEGIN 2 */
+	
+	HAL_NVIC_SetPriority(EXTI0_IRQn, 5, 5);
+	HAL_NVIC_EnableIRQ(EXTI0_IRQn);	
 	clear_screen(&huart2);
 
 	Monster tab_monster[3];
@@ -128,7 +131,6 @@ int main(void)
   /* USER CODE END WHILE */
 
   /* USER CODE BEGIN 3 */
-
   }
   /* USER CODE END 3 */
 
@@ -188,8 +190,15 @@ void SystemClock_Config(void)
 }
 
 /* USER CODE BEGIN 4 */
-void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin){
-	HAL_UART_Transmit(&huart2, (uint8_t*)"T", 1, 1);
+
+void EXTI0_IRQHandler(void)
+{
+	HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_0);
+}
+	
+void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
+{
+	HAL_UART_Transmit(&huart2, (uint8_t*)'T', 1, 1);
 }
 
 /* USER CODE END 4 */
