@@ -53,6 +53,8 @@
 /* USER CODE BEGIN PV */
 /* Private variables ---------------------------------------------------------*/
 #define NB_MONSTER 3
+
+Shooter a_shooter;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -108,19 +110,9 @@ int main(void)
 	
 	/* Création de monstres */
 	Monster tab_monster[3];
-	tab_monster[0] = initialisation_monster(4, 2, 1, 'o');
-	tab_monster[1] = initialisation_monster(2, 4, 1, 'o');
-	tab_monster[2] = initialisation_monster(2, 2, 1, 'o');
-	
-	/* Création shooter */
-	Shooter a_shooter;
-	a_shooter.life = 3;
-	a_shooter._position._x = 85;
-	a_shooter._position._y = 100;
-	
-	/* Et on l'affiche */
-	positioning_cursor(&huart2, a_shooter._position._x, a_shooter._position._y);
-	HAL_UART_Transmit(&huart2,  (uint8_t*)'_', 1, 1);
+	tab_monster[0] = initialisation_monster(4, 2, 1, 'a');
+	tab_monster[1] = initialisation_monster(2, 4, 1, 'a');
+	tab_monster[2] = initialisation_monster(2, 2, 1, 'a');
 	
 	/* affichage des monstres */
 	for(uint8_t index = 0 ; index < NB_MONSTER ; index++){			
@@ -129,8 +121,15 @@ int main(void)
 			HAL_UART_Transmit(&huart2, (uint8_t*) tab_monster[index]._type, 1, 1);
 		}
 	}
-		
-	HAL_Delay(1000);
+	
+	/* Création shooter */
+	a_shooter = init_shooter();
+	
+	HAL_Delay(500);
+	
+	/* Et on l'affiche */
+	positioning_cursor(&huart2, a_shooter._position._x, a_shooter._position._y);
+	HAL_UART_Transmit(&huart2, (uint8_t*)0x84, 1, 1);
 	
 	//clear_screen(&huart2);
   /* USER CODE END 2 */
@@ -138,9 +137,18 @@ int main(void)
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
-  {
+  {		
+		/* Déplacement missile */
+		if(a_shooter._state_shoot){
+			positioning_cursor(&huart2, a_shooter._p_missile._x, a_shooter._p_missile._y);
+			HAL_UART_Transmit(&huart2, (uint8_t*)0x08, 1, 1);
+			a_shooter._p_missile._y -= 1;
+			positioning_cursor(&huart2, a_shooter._p_missile._x, a_shooter._p_missile._y);
+			HAL_UART_Transmit(&huart2, (uint8_t*) 0x7C, 1, 1);
+		}
 		
-  /* USER CODE END WHILE */
+		HAL_Delay(350);
+	/* USER CODE END WHILE */
 
   /* USER CODE BEGIN 3 */
   }
@@ -210,7 +218,7 @@ void EXTI0_IRQHandler(void)
 	
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 {
-	HAL_UART_Transmit(&huart2, (uint8_t*)'T', 1, 1);
+	a_shooter._state_shoot = 1;
 }
 
 /* USER CODE END 4 */
