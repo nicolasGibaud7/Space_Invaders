@@ -1,2 +1,8 @@
-*.uvguix.*
 
+OBJ/
+USER/DebugConfig/
+USER/Listings/
+USER/Objects/
+
+*.bat
+*.uvguix.*
