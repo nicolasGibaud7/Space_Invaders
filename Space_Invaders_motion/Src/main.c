@@ -138,16 +138,23 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {		
-		/* Déplacement missile */
+		//* Déplacement missile */
 		if(a_shooter._state_shoot){
 			positioning_cursor(&huart2, a_shooter._p_missile._x, a_shooter._p_missile._y);
 			HAL_UART_Transmit(&huart2, (uint8_t*)0x08, 1, 1);
-			a_shooter._p_missile._y -= 1;
-			positioning_cursor(&huart2, a_shooter._p_missile._x, a_shooter._p_missile._y);
-			HAL_UART_Transmit(&huart2, (uint8_t*) 0x7C, 1, 1);
+			if(a_shooter._p_missile._y == 0){
+				a_shooter._state_shoot = 0;
+				a_shooter._p_missile._y = 39;
+				continue;
+			}
+			else{
+				a_shooter._p_missile._y -= 1;
+				positioning_cursor(&huart2, a_shooter._p_missile._x, a_shooter._p_missile._y);
+				HAL_UART_Transmit(&huart2, (uint8_t*) 0x7C, 1, 1);
+			}
 		}
 		
-		HAL_Delay(350);
+		HAL_Delay(100);
 	/* USER CODE END WHILE */
 
   /* USER CODE BEGIN 3 */
