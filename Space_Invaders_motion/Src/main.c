@@ -52,7 +52,7 @@
 
 /* USER CODE BEGIN PV */
 /* Private variables ---------------------------------------------------------*/
-#define NB_MONSTER 3
+#define NB_MONSTER 50
 
 Shooter a_shooter;
 /* USER CODE END PV */
@@ -109,16 +109,27 @@ int main(void)
 	clear_screen(&huart2);
 	
 	/* Création de monstres */
-	Monster tab_monster[3];
+	uint8_t nb_rows = 5;
+	uint8_t nb_columns = 10;
+	
+	Monster tab_monsters[nb_rows*nb_columns];
+	for (int x=0 ; x<nb_rows ; x++){
+		for (int y=0 ; y < nb_columns ; y++){
+			tab_monsters[y*nb_columns + x] = initialisation_monster(x*10, y*2, 1, 0x7C);
+		}
+	}
+	
+	/*Monster tab_monster[3];
 	tab_monster[0] = initialisation_monster(4, 2, 1, 'a');
 	tab_monster[1] = initialisation_monster(2, 4, 1, 'a');
-	tab_monster[2] = initialisation_monster(2, 2, 1, 'a');
+	tab_monster[2] = initialisation_monster(2, 2, 1, 'a');*/
 	
-	/* affichage des monstres */
+	/* affichage des monstres --> bug chelou au niveau de l'affichage */
 	for(uint8_t index = 0 ; index < NB_MONSTER ; index++){			
-		if(tab_monster[index]._state == 1){
-			positioning_cursor(&huart2, tab_monster[index]._position._x, tab_monster[index]._position._y);
-			HAL_UART_Transmit(&huart2, (uint8_t*) tab_monster[index]._type, 1, 1);
+		if(tab_monsters[index]._state == 1){
+			positioning_cursor(&huart2, tab_monsters[index]._position._x, tab_monsters[index]._position._y);
+			HAL_UART_Transmit(&huart2, (uint8_t*) tab_monsters[index]._type, 1, 1);
+			HAL_Delay(75);
 		}
 	}
 	
@@ -147,14 +158,13 @@ int main(void)
 				a_shooter._p_missile._y = 39;
 				continue;
 			}
-			else{
-				a_shooter._p_missile._y -= 1;
-				positioning_cursor(&huart2, a_shooter._p_missile._x, a_shooter._p_missile._y);
-				HAL_UART_Transmit(&huart2, (uint8_t*) 0x7C, 1, 1);
-			}
+			a_shooter._p_missile._y -= 1;
+			positioning_cursor(&huart2, a_shooter._p_missile._x, a_shooter._p_missile._y);
+			HAL_UART_Transmit(&huart2, (uint8_t*) 0x7C, 1, 1);
+			
 		}
 		
-		HAL_Delay(100);
+		HAL_Delay(25);
 	/* USER CODE END WHILE */
 
   /* USER CODE BEGIN 3 */

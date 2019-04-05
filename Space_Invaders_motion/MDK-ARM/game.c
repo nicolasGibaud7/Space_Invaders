@@ -37,3 +37,4 @@ Shooter init_shooter(void){
 	
 	return the_shooter;
 }
+
