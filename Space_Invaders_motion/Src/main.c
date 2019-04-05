@@ -149,7 +149,7 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {		
-		//* Déplacement missile */
+		/* Déplacement missile */
 		if(a_shooter._state_shoot){
 			positioning_cursor(&huart2, a_shooter._p_missile._x, a_shooter._p_missile._y);
 			HAL_UART_Transmit(&huart2, (uint8_t*)0x08, 1, 1);
@@ -159,11 +159,19 @@ int main(void)
 				continue;
 			}
 			a_shooter._p_missile._y -= 1;
+			for (int i=0 ; i < NB_MONSTER ; i++){
+				if (a_shooter._p_missile._x == tab_monsters[i]._position._x && a_shooter._position._y == tab_monsters[i]._position._y){
+					tab_monsters[i]._life -= 1;
+					if (!tab_monsters[i]._life)
+						tab_monsters[i]._state = 0;
+					a_shooter._state_shoot = 0;
+					a_shooter._p_missile._y = 39;
+					break;
+				}
+			}
 			positioning_cursor(&huart2, a_shooter._p_missile._x, a_shooter._p_missile._y);
 			HAL_UART_Transmit(&huart2, (uint8_t*) 0x7C, 1, 1);
-			
 		}
-		
 		HAL_Delay(25);
 	/* USER CODE END WHILE */
 
