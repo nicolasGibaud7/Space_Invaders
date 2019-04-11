@@ -109,8 +109,8 @@ int main(void)
 	clear_screen(&huart2);
 	
 	/* Création de monstres */
-	uint8_t nb_rows = 5;
-	uint8_t nb_columns = 10;
+	uint8_t nb_rows = 2;
+	uint8_t nb_columns = 50;
 	
 	Monster tab_monsters[nb_rows*nb_columns];
 	for (int x=0 ; x<nb_rows ; x++){
@@ -150,6 +150,12 @@ int main(void)
   while (1)
   {		
 		/* Déplacement missile */
+		for(uint8_t index = 0 ; index < NB_MONSTER ; index++){			
+			if(tab_monsters[index]._state == 1){
+				positioning_cursor(&huart2, tab_monsters[index]._position._x, tab_monsters[index]._position._y);
+				HAL_UART_Transmit(&huart2, (uint8_t*) tab_monsters[index]._type, 1, 1);
+			}
+		}	
 		if(a_shooter._state_shoot){
 			positioning_cursor(&huart2, a_shooter._p_missile._x, a_shooter._p_missile._y);
 			HAL_UART_Transmit(&huart2, (uint8_t*)0x08, 1, 1);
